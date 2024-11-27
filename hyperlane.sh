@@ -27,6 +27,15 @@ if [ ! -w "$(dirname "$LOG_FILE")" ]; then
     error_exit "Log path is not writable. Please check permissions or adjust the path: $(dirname "$LOG_FILE")"
 fi
 
+# Install Required Dependencies
+install_dependencies() {
+    log "${YELLOW}Installing required dependencies...${NC}"
+    sudo apt-get update || error_exit "Failed to update package list"
+    sudo apt-get install -y wget curl || error_exit "Failed to install wget and curl"
+    sudo apt-get install -y toilet || error_exit "Failed to install toilet"
+    log "${GREEN}All required dependencies are installed!${NC}"
+}
+
 # Set global variables
 DB_DIR="/opt/hyperlane_db_base"
 
@@ -165,6 +174,7 @@ configure_and_start_validator() {
 # Complete All Steps
 install_all() {
     log "${YELLOW}Starting full installation process...${NC}"
+    install_dependencies
     install_docker
     install_nvm_and_node
     install_foundry
@@ -190,6 +200,7 @@ main_menu() {
         toilet -f smblock "WibuCrypto"
         echo
         echo "Welcome to WibuCrypto Validator Setup!"
+        echo "Find us in telegram channel: https://t.me/wibuairdrop142"
         echo
         echo "Please Select an Option:"
         echo "1) Complete All Steps Automatically"
