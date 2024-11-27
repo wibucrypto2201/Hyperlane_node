@@ -127,7 +127,7 @@ install_hyperlane() {
 configure_and_start_validator() {
     log "${YELLOW}Configuring and starting the Validator...${NC}"
     
-    read -p "Enter Validator Name: " VALIDATOR_NAME
+    read -p "$(echo -e ${RED}Enter Validator Name: ${NC})" VALIDATOR_NAME
     
     while true; do
         read -s -p "Enter Private Key (format: 0x followed by 64 hex characters): " PRIVATE_KEY
@@ -139,7 +139,7 @@ configure_and_start_validator() {
         fi
     done
     
-    read -p "Enter RPC URL: " RPC_URL
+    read -p "$(echo -e ${RED}Enter RPC URL: ${NC})" RPC_URL
 
     CONTAINER_NAME="hyperlane"
 
