@@ -5,7 +5,8 @@ LOG_FILE="/var/log/hyperlane_setup.log"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
-NC='\033[0m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No color
 
 log() {
     echo -e "$1"
@@ -22,17 +23,11 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Check if the log path is writable
-if [ ! -w "$(dirname "$LOG_FILE")" ]; then
-    error_exit "Log path is not writable. Please check permissions or adjust the path: $(dirname "$LOG_FILE")"
-fi
-
-# Install Required Dependencies
+# Ensure Required Dependencies Are Installed
 install_dependencies() {
     log "${YELLOW}Installing required dependencies...${NC}"
     sudo apt-get update || error_exit "Failed to update package list"
-    sudo apt-get install -y wget curl || error_exit "Failed to install wget and curl"
-    sudo apt-get install -y toilet || error_exit "Failed to install toilet"
+    sudo apt-get install -y wget curl toilet || error_exit "Failed to install required dependencies (wget, curl, toilet)"
     log "${GREEN}All required dependencies are installed!${NC}"
 }
 
@@ -197,15 +192,13 @@ view_logs() {
 main_menu() {
     while true; do
         clear
-        toilet -f smblock "WibuCrypto"
+        echo -e "${GREEN}Welcome to WibuCrypto Validator Setup!${NC}"
+        echo -e "${BLUE}Find us in telegram channel: https://t.me/wibuairdrop142${NC}"
         echo
-        echo "Welcome to WibuCrypto Validator Setup!"
-        echo "Find us in telegram channel: https://t.me/wibuairdrop142"
-        echo
-        echo "Please Select an Option:"
-        echo "1) Complete All Steps Automatically"
-        echo "2) View Runtime Logs"
-        echo "0) Exit"
+        echo -e "${YELLOW}Please Select an Option:${NC}"
+        echo -e "${YELLOW}1) Complete All Steps Automatically${NC}"
+        echo -e "${YELLOW}2) View Runtime Logs${NC}"
+        echo -e "${YELLOW}0) Exit${NC}"
         echo
         read -p "Enter your choice: " choice
         case $choice in
@@ -217,4 +210,5 @@ main_menu() {
     done
 }
 
+install_dependencies
 main_menu
