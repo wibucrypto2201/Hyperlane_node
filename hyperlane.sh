@@ -6,6 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No color
 
 log() {
@@ -41,6 +42,17 @@ if [ ! -d "$DB_DIR" ]; then
 else
     log "${GREEN}Database directory already exists: $DB_DIR${NC}"
 fi
+
+# Display Logo
+display_logo() {
+    clear
+    echo -e "${CYAN}"
+    toilet -f smblock --filter border "WibuCrypto"
+    echo -e "${NC}"
+    echo -e "${GREEN}Welcome to WibuCrypto Validator Setup!${NC}"
+    echo -e "${BLUE}Find us in telegram channel: https://t.me/wibuairdrop142${NC}"
+    echo
+}
 
 # Install Docker
 install_docker() {
@@ -191,10 +203,7 @@ view_logs() {
 # Main Menu
 main_menu() {
     while true; do
-        clear
-        echo -e "${GREEN}Welcome to WibuCrypto Validator Setup!${NC}"
-        echo -e "${BLUE}Find us in telegram channel: https://t.me/wibuairdrop142${NC}"
-        echo
+        display_logo
         echo -e "${YELLOW}Please Select an Option:${NC}"
         echo -e "${YELLOW}1) Complete All Steps Automatically${NC}"
         echo -e "${YELLOW}2) View Runtime Logs${NC}"
