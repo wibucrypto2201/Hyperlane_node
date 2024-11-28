@@ -130,7 +130,7 @@ configure_and_start_validator() {
     read -p "$(echo -e ${RED}Enter Validator Name: ${NC})" VALIDATOR_NAME
     
     while true; do
-        read -s -p "$(echo -e ${RED}Enter Private Key (format: 0x followed by 64 hex characters): ${NC})" PRIVATE_KEY
+        read -s -p "Enter Private Key (format: 0x followed by 64 hex characters): " PRIVATE_KEY
         echo ""
         if [[ ! $PRIVATE_KEY =~ ^0x[0-9a-fA-F]{64}$ ]]; then
             log "${RED}Invalid Private Key format! Ensure it starts with '0x' and is followed by 64 hex characters.${NC}"
@@ -138,7 +138,6 @@ configure_and_start_validator() {
             break
         fi
     done
-
     
     read -p "$(echo -e ${RED}Enter RPC URL: ${NC})" RPC_URL
 
